@@ -63,7 +63,7 @@ lives in [`docs/`](./docs).
 
 - `.env` files, API keys, tokens, certificates, KMS material
 - Call recordings, transcripts, or any real caller data — these are **personal data**,
-  and PHI in healthcare workspaces (see [`docs/14`](./docs/14-compliance-controls.md))
+  and PHI in healthcare workspaces (see the architecture doc)
 - Model weights or checkpoints — use object storage
 - `node_modules/`, build output
 
