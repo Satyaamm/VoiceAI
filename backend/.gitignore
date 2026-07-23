@@ -1,0 +1,84 @@
+# ---------------------------------------------------------------------------
+# Backend — TypeScript control plane, plus the Rust and Python services.
+# See docs/08-project-structure.md for why this folder holds three languages.
+# ---------------------------------------------------------------------------
+
+# --- Node / TypeScript (control-plane) -------------------------------------
+node_modules/
+dist/
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+
+# tsx / esbuild scratch
+.tsx/
+
+# --- Secrets specific to this service --------------------------------------
+# AUTH_SESSION_SECRET, AUTH_HASH_PEPPER and every provider API key resolve
+# through SecretResolver. In production that is Vault/KMS; locally it is .env,
+# which is ignored above. Nothing here is ever a tracked file.
+*.env.local
+kms-master-key*
+
+# --- Database ---------------------------------------------------------------
+# Migrations ARE tracked (src/db/migrations/*.sql) — they are source. Generated
+# Drizzle metadata and local volumes are not.
+drizzle/meta/_journal.json.bak
+pgdata/
+*.dump
+*.sql.gz
+
+# --- Rust (media/, orchestrator/) ------------------------------------------
+target/
+**/*.rs.bk
+Cargo.lock.orig
+# Cargo.lock IS committed for binaries (reproducible builds); only ignore it for
+# libraries. media/ and orchestrator/ are binaries, so it stays tracked.
+
+# --- Python (inference/, orchestrator/) ------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+.venv/
+env/
+ENV/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+*.egg-info/
+.eggs/
+
+# --- ML artefacts -----------------------------------------------------------
+# Model weights, checkpoints and ONNX exports are large binaries — they belong in
+# object storage or a model registry, not in git. The endpointer export
+# (docs/08) is produced by a build step, never committed.
+*.onnx
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.bin
+!**/tokenizer.bin
+checkpoints/
+wandb/
+mlruns/
+
+# --- Test / eval output -----------------------------------------------------
+coverage/
+.nyc_output/
+eval-results/
+traces/
+
+# --- Scratch verification files --------------------------------------------
+# Written during development to prove a module works, then deleted. Ignored so a
+# forgotten one never lands in history.
+scratch-*.mts
+scratch-*.ts
+ct.mts
+sim.mts
+ep.mts

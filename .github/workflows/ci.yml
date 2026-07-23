@@ -1,0 +1,63 @@
+name: CI
+
+# Runs on every PR. Branch protection requires this to pass before merge, so a
+# red build blocks the merge button rather than being advisory.
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    name: Backend typecheck
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend/control-plane
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install --no-audit --no-fund
+      - run: npx tsc --noEmit
+
+  frontend:
+    name: Frontend typecheck
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install --no-audit --no-fund
+      - run: npx tsc --noEmit
+
+  secrets:
+    name: Secret scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      # A leaked key in a PUBLIC repo is compromised the instant it is pushed.
+      # This gate is cheap; the alternative is a rotation incident.
+      - name: Block committed secrets
+        run: |
+          set -e
+          if git diff --name-only origin/main...HEAD 2>/dev/null | grep -Ei '(^|/)\.env($|\.)|\.(pem|key|p12|pfx)$'; then
+            echo "::error::Secret-bearing file detected in this PR."
+            exit 1
+          fi
+          if git grep -nEI '(ghp_[A-Za-z0-9]{20,}|sk-[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16})' -- . ':!*.gitignore' ':!.github/workflows/ci.yml'; then
+            echo "::error::Hardcoded credential pattern found."
+            exit 1
+          fi
+          echo "No secrets detected."

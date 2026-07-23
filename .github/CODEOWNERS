@@ -1,0 +1,8 @@
+# Every PR requires review from a code owner before it can merge.
+* @Satyaamm
+
+# Areas where a mistake is expensive enough to always want the owner's eyes.
+/docs/14-compliance-controls.md  @Satyaamm
+/docs/15-legal-review-queue.md   @Satyaamm
+/backend/control-plane/src/compliance/  @Satyaamm
+/backend/control-plane/src/domain/tenant.ts  @Satyaamm

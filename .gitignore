@@ -1,0 +1,116 @@
+# ---------------------------------------------------------------------------
+# Root ignore. Package-specific rules live in backend/.gitignore and
+# frontend/.gitignore so each stack stays self-documenting.
+# ---------------------------------------------------------------------------
+
+# Dependencies
+node_modules/
+.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/versions
+
+# ---------------------------------------------------------------------------
+# Secrets — nothing in this block may ever be committed.
+#
+# The platform holds auth pepper, session secret, per-tenant KMS master keys, and
+# provider API keys. A leaked key here is a GDPR Art. 33 breach, not an
+# inconvenience. `.env.example` is the ONLY env file that is tracked.
+# ---------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+secrets/
+credentials.json
+service-account*.json
+gha-creds-*.json
+
+# Build output
+dist/
+build/
+out/
+*.tsbuildinfo
+
+# Test & coverage
+coverage/
+.nyc_output/
+*.lcov
+test-results/
+playwright-report/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Caches
+.cache/
+.turbo/
+.eslintcache
+.parcel-cache/
+.npm/
+
+# Editors
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Scratch / throwaway verification files.
+# Several of these get written during development to prove a module works; they
+# are deliberately transient and must not enter history.
+scratch/
+scratch-*.ts
+scratch-*.mts
+*.scratch.ts
+tmp/
+.tmp/
+
+# Terraform / infra state (contains resource ids and sometimes secrets)
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+
+# Local database volumes
+pgdata/
+*.sqlite
+*.sqlite3
+*.db
+
+# Recordings & call artefacts. These are personal data (and PHI in healthcare
+# workspaces) — they belong in encrypted object storage with a retention policy,
+# never in a git repository. See docs/14-compliance-controls.md.
+recordings/
+*.wav
+*.mp3
+*.ogg
+*.opus
+*.flac
+docs/15-legal-review-queue.md

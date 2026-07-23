@@ -1,0 +1,57 @@
+/*
+ * The only global stylesheet in the app, and deliberately tiny.
+ *
+ * No colours here beyond neutral scrollbar tints — every product colour comes
+ * from antd theme tokens (docs/09: "NO CSS files with hardcoded colors").
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Slim scrollbars — this is a dense console, not a document reader. */
+* {
+  scrollbar-width: thin;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: color-mix(in srgb, currentColor 18%, transparent);
+  border: 3px solid transparent;
+  background-clip: content-box;
+  border-radius: 8px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: color-mix(in srgb, currentColor 30%, transparent);
+}
+
+*::-webkit-scrollbar-corner,
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Tabular figures everywhere a metric is rendered — latency numbers must not
+   dance as they update. */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,70 @@
+# ---------------------------------------------------------------------------
+# Frontend — Next.js 14 (App Router) + React 18 + Ant Design v5.
+# See docs/07-ui-stack.md.
+# ---------------------------------------------------------------------------
+
+# Dependencies
+node_modules/
+.pnp
+.pnp.*
+
+# Next.js build output
+.next/
+out/
+build/
+dist/
+next-env.d.ts
+
+# Production
+*.tsbuildinfo
+
+# ---------------------------------------------------------------------------
+# Environment
+#
+# NEXT_PUBLIC_* values are compiled into the client bundle and are therefore
+# PUBLIC by definition — never put a secret behind that prefix. Server-only
+# values belong in .env.local, which is ignored here.
+# ---------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+
+# Deployment platforms
+.vercel/
+.netlify/
+
+# Testing
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+/blob-report/
+/playwright/.cache/
+__snapshots__/*.snap.new
+storybook-static/
+
+# Caches
+.eslintcache
+.turbo/
+.swc/
+
+# Editors
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# OS
+.DS_Store
+*.pem
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Local scratch
+scratch-*.ts
+scratch-*.tsx
+tmp/
