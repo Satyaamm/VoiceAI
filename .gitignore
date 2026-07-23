@@ -114,3 +114,6 @@ recordings/
 *.opus
 *.flac
 docs/15-legal-review-queue.md
+
+# Internal strategy, market and legal analysis — kept local, never published.
+.private-docs/
